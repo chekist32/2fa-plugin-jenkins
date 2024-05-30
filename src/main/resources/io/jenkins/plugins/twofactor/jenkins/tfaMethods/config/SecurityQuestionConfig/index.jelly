@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?jelly escape-by-default='true'?>
+<j:jelly xmlns:j="jelly:core" xmlns:f="/lib/form" xmlns:l="/lib/layout">
+
+    <l:layout title="Security Questions" type="one-column">
+
+        <l:breadcrumb title="${% Two factor authentication}" />
+
+        <l:main-panel>
+            <div class="config body" style="padding: 40px 40px">
+
+                <h2>Configure your security questions for 2FA</h2>
+                <p>Please choose any 3 unique security questions and enter your answer in the corresponding text boxes.
+                    <br/>
+                    At the time of login, you will be asked any two questions to verify your identity.
+                </p>
+
+                <j:if test="${it.getErrorMsg() != null}">
+                    <p class="alert alert-danger">
+                        <b>${it.getErrorMsg()}</b>
+                    </p>
+                </j:if>
+
+                <f:section title="Security questions :">
+                    <f:form method="post" action="configure" name="replace" descriptor="${it.DESCRIPTOR}">
+                        <j:set var="tfaQA" value="${it.getUserTfaQA()}"/>
+
+                        <j:forEach var="qa" items="${tfaQA}" varStatus="status">
+                            <f:entry>
+                                <f:entry title="Security question ${status.index + 1}"
+                                         field="questions">
+                                    <f:select field="question"
+                                              default="${qa.getQuestion()}"/>
+                                </f:entry>
+                                <f:entry>
+                                    <f:textbox field="answer"
+                                               placeholder="Enter your answer here"
+                                               default="${qa.getAnswer().getPlainText()}"/>
+                                </f:entry>
+                            </f:entry>
+                        </j:forEach>
+
+                        <f:bottomButtonBar>
+                            <f:submit value="Save"/>
+                        </f:bottomButtonBar>
+
+                    </f:form>
+                </f:section>
+            </div>
+        </l:main-panel>
+    </l:layout>
+</j:jelly>
+

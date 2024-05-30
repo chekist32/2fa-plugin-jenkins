@@ -1,0 +1,40 @@
+<?jelly escape-by-default='true'?>
+<j:jelly xmlns:j="jelly:core" xmlns:f="/lib/form" xmlns:l="/lib/layout" xmlns:st="jelly:stapler">
+    <l:layout title="Security Questions" type="full-screen">
+        <l:main-panel>
+
+            <st:adjunct includes="io.jenkins.plugins.twofactor.jenkins.assets.CSS.SecurityQuestionAuth"/>
+
+            <f:form method="post" action="authenticate" name="replace" descriptor="${it.DESCRIPTOR}">
+                <div class="form-header">
+                    <img class="form-header-img" src="/plugin/2fa-jenkins-plugin/images/logo.svg"
+                         alt="Img not found"/>
+                    <span class="form-header-title">Validate Security Questions</span>
+                </div>
+                <j:if test="${it.getShowWrongCredentialWarning()}">
+                    <p class="alert alert-danger">
+                        <b>Wrong credentials</b>
+                    </p>
+                </j:if>
+
+                <hr style="margin-bottom: 18px"/>
+                <h3 style="margin-bottom: 18px">Hello, ${it.getUserId()}</h3>
+                <p class="alert alert-info">
+                    <b>Please enter valid answers of the questions given below to get the access of Jenkins.</b>
+                </p>
+
+                <j:forEach var="question" items="${it.getQuestions()}">
+                    <p class="jenkins-section__title">${question}</p>
+                    <f:entry field="answer">
+                        <f:textbox placeholder="Please enter your answer here"/>
+                    </f:entry>
+                </j:forEach>
+
+                <f:submit value="Submit"/>
+                <a href="../" style="display: inline-block; margin-left: 15px;">Validate by other method?</a>
+            </f:form>
+
+        </l:main-panel>
+    </l:layout>
+</j:jelly>
+

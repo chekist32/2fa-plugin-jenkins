@@ -1,0 +1,96 @@
+<?jelly escape-by-default='true'?>
+<j:jelly xmlns:j="jelly:core" xmlns:l="/lib/layout" xmlns:st="jelly:stapler">
+
+    <j:set var="isSecurityQuestionConfigurationIsEnabled" value="${it.isSecurityQuestionConfigurationIsEnabled()}" />
+    <j:set var="isSecurityQuestionConfigured" value="${it.isSecurityQuestionConfigured()}" />
+
+    <j:set var="isOtpOverEmailIsEnabled" value="${it.isOtpOverEmailIsEnabled()}" />
+    <j:set var="isOtpOverEmailConfigured" value="${it.isOtpOverEmailConfigured()}" />
+
+    <j:set var="isTotpEnabled" value="${it.isTotpEnabled()}" />
+    <j:set var="isTotpConfigured" value="${it.isTotpConfigured()}" />
+
+        <l:layout title="2FA Config" type="one-column">
+            <l:breadcrumb title="${% Two factor authentication}" />
+
+            <l:main-panel>
+
+                <st:adjunct includes="io.jenkins.plugins.twofactor.jenkins.assets.CSS.UserConfigCards"/>
+
+                <h1 class="user-security-methods-heading">Configure your 2FA settings for enhanced security</h1>
+                <div class="user-security-methods">
+
+                    <j:if test="${isSecurityQuestionConfigurationIsEnabled}">
+                        <div class="card">
+                            <h3 class="card-heading">Security Question</h3>
+                            <div class="card-data">
+                                <img src="/plugin/2fa-jenkins-plugin/images/MoSecurityQuestionIcon.png"
+                                     alt="Img not found"/>
+                                <span>User need's to answer the security questions to access the jenkins.</span>
+                            </div>
+
+                            <j:if test="${!isSecurityQuestionConfigured}">
+                                <a class="card-link-btn" href="./securityQuestionConfig">Configure</a>
+                            </j:if>
+
+                            <j:if test="${isSecurityQuestionConfigured}">
+                                <form method="post" action="./securityQuestionConfig/reset">
+                                    <button class="card-link-btn" onclick="this.parentNode.submit();">Reset</button>
+                                </form>
+                            </j:if>
+
+                        </div>
+                    </j:if>
+
+
+                    <j:if test="${isOtpOverEmailIsEnabled}">
+                        <div class="card">
+                            <h3 class="card-heading">OTP Over Email</h3>
+                            <div class="card-data">
+                                <img src="/plugin/2fa-jenkins-plugin/images/MoOtpOverEmailLogo.png"
+                                     alt="Img not found"/>
+                                <span>User need's to enter the OTP received on his email.</span>
+                            </div>
+
+                            <j:if test="${!isOtpOverEmailConfigured}">
+                                <form method="post" action="./otpOverEmailConfig/configure">
+                                    <button class="card-link-btn" onclick="this.parentNode.submit();">Configure</button>
+                                </form>
+                            </j:if>
+
+                            <j:if test="${isOtpOverEmailConfigured}">
+                                <form method="post" action="./otpOverEmailConfig/reset">
+                                    <button class="card-link-btn" onclick="this.parentNode.submit();">Reset</button>
+                                </form>
+                            </j:if>
+                        </div>
+                    </j:if>
+
+                    <j:if test="${isTotpEnabled}">
+                        <div class="card">
+                            <h3 class="card-heading">TOTP App</h3>
+                            <div class="card-data">
+                                <img src="/plugin/2fa-jenkins-plugin/images/TotpLogo.svg"
+                                     alt="Img not found"/>
+                                <span>User need's to enter the TOTP code from TOTP App (such as Google Authenticator, Aegis, etc.).</span>
+                            </div>
+
+                            <j:if test="${!isTotpConfigured}">
+                                <a class="card-link-btn" href="./totpConfig">Configure</a>
+                            </j:if>
+
+                            <j:if test="${isTotpConfigured}">
+                                <form method="post" action="./totpConfig/reset">
+                                    <button class="card-link-btn" onclick="this.parentNode.submit();">Reset</button>
+                                </form>
+                            </j:if>
+                        </div>
+                    </j:if>
+
+                </div>
+
+            </l:main-panel>
+
+        </l:layout>
+
+</j:jelly>

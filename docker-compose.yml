@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+  jenkins:
+    image: jenkins/jenkins:2.361.4
+    environment:
+      - JAVA_OPTS="-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005"
+    ports:
+      - "8070:8080"
+      - "8443:8443"
+      - "5051:5050"
+      - "5005:5005"
+    volumes:
+      - "/var/docker_data/jenkins-test:/var/jenkins_home"
+    command:
+      - "--httpsPort=8443"
+      - "--httpsKeyStore=/var/jenkins_home/jenkins_keystore.jks"
+      - "--httpsKeyStorePassword=mypassword"

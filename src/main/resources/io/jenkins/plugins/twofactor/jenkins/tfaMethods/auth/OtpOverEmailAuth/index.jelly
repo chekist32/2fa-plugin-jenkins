@@ -1,0 +1,89 @@
+<?jelly escape-by-default='true'?>
+<j:jelly xmlns:j="jelly:core" xmlns:f="/lib/form" xmlns:l="/lib/layout" xmlns:st="jelly:stapler">
+
+    <j:set var="otpOverEmailConfigured" value="${it.isOtpOverEmailConfigured()}"/>
+
+    <l:layout title="Email configuration" type="one-column">
+
+        <l:breadcrumb title="${% Two factor authentication}" />
+
+        <l:main-panel>
+            <st:adjunct includes="io.jenkins.plugins.twofactor.jenkins.assets.CSS.SecurityQuestionAuth"/>
+
+            <j:set var="otpOverEmailConfigured" value="{it.isOtpOverEmailConfigured()}"/>
+
+            <div class="config body">
+                <f:form method="post" action="authenticate" name="replace"
+                        descriptor="${it.DESCRIPTOR}">
+
+                    <div class="form-header">
+                        <img class="form-header-img" src="/plugin/2fa-jenkins-plugin/images/logo.svg"
+                             alt="Img not found"/>
+                        <span class="form-header-title">
+                            <j:if test="${otpOverEmailConfigured}">
+                                Validate
+                            </j:if>
+                            <j:if test="${!otpOverEmailConfigured}">
+                                CONFIGURE
+                            </j:if>
+                            2FA - OTP OVER EMAIL
+                        </span>
+                    </div>
+
+                    <j:if test="${it.getShowWrongCredentialWarning(it.getUserId())}">
+                        <p class="alert alert-danger">
+                            <b>Please enter correct OTP</b>
+                        </p>
+                    </j:if>
+
+
+                    <hr style="margin-bottom: 18px"/>
+                    <h3 style="margin-bottom: 18px">Hello, ${it.getUserId()}</h3>
+
+                    <p class="alert alert-info">
+                        <j:if test="${it.isOtpSentToUser()}">
+                            Please click on <b>Resend OTP </b>
+                            If you haven't received OTP to your registered email address.
+                        </j:if>
+
+                        <j:if test="${!it.isOtpSentToUser()}">
+                            <span>Please click to send OTP button to send OTP to your registered email address.</span>
+                        </j:if>
+
+                        <j:if test="${!otpOverEmailConfigured}">
+                            <span><b>(${it.getUserEmailAddress()})</b></span>
+                        </j:if>
+
+                        <span>Then enter OTP you received on your configured email address to get access of Jenkins.</span>
+                    </p>
+
+                    <f:entry title="Enter OTP received on email">
+                        <div class="validation-block" style="">
+                            <f:textbox field="emailOtpForVerification"
+                                       placeholder="Enter OTP"/>
+
+                            <j:if test="${it.isOtpSentToUser()}">
+                                <f:submit value="Validate"/>
+                            </j:if>
+                        </div>
+                    </f:entry>
+                </f:form>
+
+                <div>
+                    <form style="display: inline-block" method="post" action="./resendOtp" id="resendOTPForm">
+                        <button class="resend-otp"
+                                method="post"
+                                action="./resendOtp"
+                                id="resendOTPForm"
+                                onclick="document.getElementById('resendOTPForm').submit();">
+                            ${it.isOtpSentToUser() ? "Resend OTP" : "Send OTP"}
+                        </button>
+                    </form>
+                    <a href="../" style="display: inline-block; margin-left: 15px;">Validate by other method?</a>
+                </div>
+            </div>
+        </l:main-panel>
+    </l:layout>
+</j:jelly>
+
+

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?jelly escape-by-default='true'?>
+<j:jelly xmlns:j="jelly:core" xmlns:f="/lib/form" xmlns:l="/lib/layout" xmlns:st="jelly:stapler">
+
+    <l:layout title="TOTP Config" type="one-column">
+        <l:main-panel>
+            <st:adjunct includes="io.jenkins.plugins.twofactor.jenkins.assets.CSS.TotpConfig"/>
+
+            <f:form action="configure" method="post" name="">
+            <div class="body">
+                <div class="header">
+                    <h2>Configure TOTP for 2FA</h2>
+                </div>
+                <div class="text-instruction-block">
+                    <p>Please scan the QR Code below using Google Authentication, Aegis, etc. Then click "Next" in order to proceed.</p>
+                </div>
+                <div class="qr-code-block">
+                    <img src="${it.generateSecretKey()}" />
+                </div>
+                <f:submit value="Next"/>
+            </div>
+            </f:form>
+
+        </l:main-panel>
+    </l:layout>
+
+</j:jelly>
