@@ -5,7 +5,7 @@
 
 
 ## Description
-This project is just a fork of the [jenkinsci/miniorange-two-factor-plugin](https://github.com/jenkinsci/miniorange-two-factor-plugin) with a slightly refactored code base and added TOTP Authentication.
+This project is a fork of the [jenkinsci/miniorange-two-factor-plugin](https://github.com/jenkinsci/miniorange-two-factor-plugin) with a refactored code base, removed banners and added TOTP Authentication.
 
 **Supported Authentication methods**
 - Security Questions
