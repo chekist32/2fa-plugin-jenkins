@@ -19,7 +19,7 @@
         <changelist>-SNAPSHOT</changelist>
         <jenkins.version>2.361.4</jenkins.version>
         <enforcer.skip>true</enforcer.skip>
-        <gitHubRepo>jenkinsci/${project.artifactId}-plugin</gitHubRepo>
+        <gitHubRepo>jenkinsci/${project.artifactId}</gitHubRepo>
     </properties>
 
     <dependencyManagement>
