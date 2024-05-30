@@ -18,3 +18,7 @@ target/
 .vscode/
 META-INF.spring/
 META-INF/
+
+.env*
+
+!*.example

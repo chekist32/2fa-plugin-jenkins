@@ -1,5 +1,7 @@
 # 2FA for Jenkins
-![image_1](/docs/images/jenkins_2fa.png)
+<div style="display: flex; justify-content: center; align-items: center;">
+    <img src="./docs/images/plugin_logo.png" alt="logo" />
+</div>
 
 
 ## Description
