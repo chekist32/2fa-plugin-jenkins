@@ -33,9 +33,6 @@
                             Otp Over Email
                         </button>
                     </f:form>
-<!--                    <a class="submit jenkins-button custom" href="./otpOverEmailAuth">-->
-<!--                        Otp Over Email-->
-<!--                    </a>-->
                 </div>
             </j:if>
 

@@ -17,13 +17,13 @@ public class TwoFactorAuthResetFilter implements Filter {
     public static final String TFA_RESET_NAME = "isResetAllowed_";
 
     private static final RequestMatcher SECURITY_QUESTIONS_RESET_MATCHER = new AntPathRequestMatcher(
-            "/user/**/" + TfaMethodType.SECURITY_QUESTION.getConfigPath() + "/reset"
+            "/**/" + TfaMethodType.SECURITY_QUESTION.getConfigPath() + "/reset"
     );
     private static final RequestMatcher OTP_OVER_EMAIL_RESET_MATCHER = new AntPathRequestMatcher(
-            "/user/**/" + TfaMethodType.OTP_OVER_EMAIL.getConfigPath() + "/reset"
+            "/**/" + TfaMethodType.OTP_OVER_EMAIL.getConfigPath() + "/reset"
     );
     private static final RequestMatcher TOTP_RESET_MATCHER = new AntPathRequestMatcher(
-            "/user/**/" + TfaMethodType.TOTP.getConfigPath() + "/reset"
+            "/**/" + TfaMethodType.TOTP.getConfigPath() + "/reset"
     );
 
     @Initializer
@@ -39,9 +39,12 @@ public class TwoFactorAuthResetFilter implements Filter {
     ) {
         var isResetAllowed = (Boolean) session.getAttribute(TFA_RESET_NAME+methodType.name());
         if (isResetAllowed == null || !isResetAllowed) {
+            session.setAttribute(TFA_RESET_NAME+methodType.name(), false);
             session.setAttribute(TwoFactorAuthFilter.REDIRECT_URL_NAME, req.getRequestURI());
+
             res.setStatus(HttpServletResponse.SC_TEMPORARY_REDIRECT);
             res.setHeader("Location", "/"+PluginUrls.USER_AUTH_PATH+"/"+methodType.getAuthPath());
+
             return true;
         }
 
