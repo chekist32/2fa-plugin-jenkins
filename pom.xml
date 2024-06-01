@@ -15,7 +15,7 @@
     <packaging>hpi</packaging>
 
     <properties>
-        <revision>1.0.0</revision>
+        <revision>1.0.2</revision>
         <changelist></changelist>
         <jenkins.version>2.361.4</jenkins.version>
         <enforcer.skip>true</enforcer.skip>
