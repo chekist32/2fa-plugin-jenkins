@@ -2,10 +2,8 @@ name: Jenkins Security Scan
 on:
   push:
     branches:
-      - '*'
+      - 'master'
   pull_request:
-    branches:
-      - '*'
     types: [ opened, synchronize, reopened ]
   workflow_dispatch:
 
